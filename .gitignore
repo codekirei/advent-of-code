@@ -1,3 +1,6 @@
+# AoC Test Input Files
+*.input.txt
+
 # Logs
 logs
 *.log

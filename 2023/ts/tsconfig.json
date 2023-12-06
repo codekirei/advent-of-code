@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
-    "moduleDetection": "force"
+    "moduleDetection": "force",
+    "module": "esnext",
+    "target": "esnext"
   }
 }
