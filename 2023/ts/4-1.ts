@@ -14,7 +14,7 @@ interface MatchMap {
   num?: true;
 }
 
-const countMatches = (card: string): number => {
+export const countMatches = (card: string): number => {
   const matches: MatchMap = {};
   let matchCt = 0;
 
