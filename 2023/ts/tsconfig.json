@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
     "moduleDetection": "force",
     "module": "esnext",
     "target": "esnext"
