@@ -1,11 +1,11 @@
 import { readInput } from "./utils";
 
-interface Race {
+export interface Race {
   time: number;
   dist: number;
 }
 
-const extractNums = (str: string): string[] => {
+export const extractNums = (str: string): string[] => {
   return str.match(/\b\d+\b/g);
 };
 
@@ -64,7 +64,7 @@ const findMin = (
   }
 };
 
-const countWins = (race: Race): number => {
+export const countWins = (race: Race): number => {
   const best = findBest(0, race.time, race.time, 0);
   const min = findMin(0, best, race.time, race.dist);
   const adjustment = race.time % 2 ? 2 : 1;
