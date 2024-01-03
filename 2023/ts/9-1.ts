@@ -1,7 +1,7 @@
 import { readInput } from "./utils";
 
 const input = await readInput();
-const lines = input.trim().split("\n");
+export const lines = input.trim().split("\n");
 
 const loop = (nums: number[], accum: number) => {
   let loopAgain = false;
@@ -27,6 +27,3 @@ const extrapolate = (line: string): number => {
 export default async function main() {
   return lines.reduce((accum, line) => accum + extrapolate(line), 0);
 }
-
-const out = await main();
-console.log(out);
