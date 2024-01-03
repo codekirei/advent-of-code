@@ -1,4 +1,4 @@
-import { readFile } from "fs/promises";
+import { readInput } from "./utils";
 
 // Utility Functions and Setup -------------------------------------------------
 
@@ -23,7 +23,7 @@ export const readMaps = (src: number, maps: number[][][]): number => {
 };
 
 // Parse and Evaluate Input ----------------------------------------------------
-const input = await readFile("./5.input.txt", { encoding: "utf8" });
+const input = await readInput("05");
 const maps: number[][][] = [];
 let seeds: number[];
 

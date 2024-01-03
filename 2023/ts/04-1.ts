@@ -1,7 +1,7 @@
-import { readFile } from "fs/promises";
+import { readInput } from "./utils";
 
-const input = await readFile("./4.input.txt", { encoding: "utf8" });
-const cards = input.trim().split("\n");
+const input = await readInput("04");
+export const cards = input.trim().split("\n");
 
 const valueOfMatches = (matchCt: number): number => {
   if (matchCt == 0) {

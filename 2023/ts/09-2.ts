@@ -1,4 +1,4 @@
-import { lines } from "./9-1";
+import { lines } from "./09-1";
 
 const loop = (nums: number[], firsts: number[]): number => {
   let loopAgain = false;

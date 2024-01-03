@@ -1,6 +1,6 @@
 import { readInput } from "./utils";
 
-const input = await readInput();
+const input = await readInput("09");
 export const lines = input.trim().split("\n");
 
 const loop = (nums: number[], accum: number) => {

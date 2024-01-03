@@ -1,4 +1,4 @@
-import { getSurrounding } from "./3-1";
+import { getSurrounding } from "./03-1";
 
 test("getSurrounding single x,y", () => {
   const got = getSurrounding(4, 4, 2);

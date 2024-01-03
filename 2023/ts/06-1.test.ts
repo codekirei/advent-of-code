@@ -1,7 +1,7 @@
-import { default as main } from "./6-2";
+import { default as main } from "./06-1";
 
 test("correct solution", async () => {
   const got = await main();
-  const want = 41382569;
+  const want = 840336;
   expect(got).toEqual(want);
 });

@@ -1,4 +1,4 @@
-import { createMap, readMap, readMaps, default as main } from "./5-1";
+import { createMap, readMap, readMaps, default as main } from "./05-1";
 
 const map = [
   [98, 99, -48],

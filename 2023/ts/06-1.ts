@@ -72,7 +72,7 @@ export const countWins = (race: Race): number => {
 };
 
 export default async function main() {
-  const input = await readInput();
+  const input = await readInput("06");
   const races = parseInput(input);
   return races.reduce((accum, race) => accum * countWins(race), 1);
 }

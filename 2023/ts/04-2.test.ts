@@ -1,4 +1,4 @@
-import { incrFirstN, default as main } from "./4-2";
+import { incrFirstN, default as main } from "./04-2";
 
 test("incrFirstN", () => {
   const arr = [0, 0, 0, 0, 0];

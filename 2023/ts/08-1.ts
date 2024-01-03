@@ -27,7 +27,7 @@ const makeMap = (cleaned: string[]): MapT => {
   return out;
 };
 
-const input = await readInput();
+const input = await readInput("08");
 const cleaned = input.trim().split("\n");
 const directions = getDirections(cleaned);
 const map = makeMap(cleaned);

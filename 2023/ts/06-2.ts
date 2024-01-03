@@ -1,6 +1,6 @@
 import { readInput } from "./utils";
 
-import { Race, extractNums, countWins } from "./6-1";
+import { Race, extractNums, countWins } from "./06-1";
 
 const parseInput = (input: string): Race => {
   const lines = input.trim().split("\n");
@@ -10,7 +10,7 @@ const parseInput = (input: string): Race => {
 };
 
 export default async function main() {
-  const input = await readInput();
+  const input = await readInput("06");
   const race = parseInput(input);
   return countWins(race);
 }

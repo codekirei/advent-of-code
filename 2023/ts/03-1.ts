@@ -1,4 +1,4 @@
-import { readFile } from "fs/promises";
+import { readInput } from "./utils";
 
 /**
   Pseudocode
@@ -31,8 +31,8 @@ import { readFile } from "fs/promises";
 */
 
 // Read puzzle input file ------------------------------------------------------
-const input = await readFile("./3.input.txt", { encoding: "utf8" });
-const lines = input.split("\n");
+const input = await readInput("03");
+export const lines = input.split("\n");
 const maxXidx = lines[0].length - 1;
 
 // Define Helper Maps ----------------------------------------------------------

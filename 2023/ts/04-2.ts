@@ -1,8 +1,4 @@
-import { readFile } from "fs/promises";
-import { countMatches } from "./4-1";
-
-const input = await readFile("./4.input.txt", { encoding: "utf8" });
-const cards = input.trim().split("\n");
+import { cards, countMatches } from "./04-1";
 
 let cardCt = cards.length;
 const extras = new Array(cardCt).fill(0);
