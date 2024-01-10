@@ -5,14 +5,14 @@
 import { readInput } from "./utils";
 
 const input = await readInput("22");
-const blocks = input.trim().split("\n");
+const raw = input.trim().split("\n");
 
-const idToSupportedCt = {};
-const incrSupported = (id: number) => {
-  idToSupportedCt[id] = idToSupportedCt.hasOwnProperty(id)
-    ? idToSupportedCt[id] + 1
-    : 1;
-};
+// const idToSupportedCt = {};
+// const incrSupported = (id: number) => {
+//   idToSupportedCt[id] = idToSupportedCt.hasOwnProperty(id)
+//     ? idToSupportedCt[id] + 1
+//     : 1;
+// };
 
 type Coord = {
   x: number;
@@ -93,42 +93,31 @@ const sortBlocks = (a: Block, b: Block) => {
   return a.z0 - b.z0;
 };
 
-// FIXME: full grid isn't necessary; you can just keep track of height and last
-// block in one 2D array
-const grid3d = [];
-const createLayer = (x: number, y: number) => {
-  const createRow = () => Array(x).fill(null);
-  return Array(y).fill(null).map(createRow);
+type NodeT = {
+  height: number;
+  id: number;
 };
-const stack = () => grid3d.push(createLayer(maxX + 1, maxY + 1));
 
-// FIXME: this is going bottom up and needs to be top down
+const grid: NodeT[][] = [];
+
+const prepGrid = (x: number, y: number) => {
+  const createNode = (): NodeT => ({ height: 0, id: null });
+  const createRow = () => Array(x).fill(null).map(createNode);
+  grid.push(...Array(y).fill(null).map(createRow));
+};
+
 const dropTall = (block: Block) => {
-  let z = 0;
-  let lastSupportingId = null;
   const { x0, y0, z0, z1, id } = block;
 
-  while (z < grid3d.length) {
-    const target = grid3d[z][y0][x0];
-    if (target == null) {
-      break;
-    }
+  const node = grid[y0][x0];
 
-    ++z;
-    lastSupportingId = target;
+  const supportingBlock = node.id;
+  if (supportingBlock) {
+    // TODO: handle collision for disintegrate detection
   }
 
-  if (lastSupportingId != null) {
-    incrSupported(lastSupportingId);
-  }
-
-  const z2 = z1 - z0 + z;
-  for (z; z <= z2; ++z) {
-    if (z > grid3d.length - 1) {
-      stack();
-    }
-    grid3d[z][y0][x0] = id;
-  }
+  node.height = node.height + z1 - z0 + 1;
+  node.id = id;
 };
 
 const dropFlat = (block: Block) => {};
@@ -142,7 +131,10 @@ const dropBlock = (block: Block) => {
 };
 
 export default function main() {
-  blocks.map(rawToBlock).sort(sortBlocks).forEach(dropBlock);
+  const blocks = raw.map(rawToBlock);
+  prepGrid(maxX + 1, maxY + 1);
+
+  blocks.sort(sortBlocks).forEach(dropBlock);
 }
 
 main();
