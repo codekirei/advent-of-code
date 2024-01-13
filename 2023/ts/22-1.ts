@@ -24,16 +24,23 @@ const input = await readInput("22");
 export const raw = input.trim().split("\n");
 const blockCt = raw.length;
 
-const keyBlocks = new Map();
-let grid: NodeT[][];
+const insertSorted = (blocks: BlockT[], block: BlockT) => {
+  let low = 0;
+  let high = blocks.length - 1;
 
-const prepGrid = (x: number, y: number) => {
-  const createNode = (): NodeT => ({ height: 0, id: null });
-  const createRow = () => Array(x).fill(null).map(createNode);
-  grid = Array(y).fill(null).map(createRow);
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2);
+    if (blocks[mid].z0 > block.z0) {
+      high = mid - 1;
+    } else {
+      low = mid + 1;
+    }
+  }
+
+  blocks.splice(low, 0, block);
 };
 
-const parseRaw = (raw: string[]): [BlockT[], number, number] => {
+export const parseRaw = (raw: string[]): [BlockT[], number, number] => {
   return raw.reduce(
     (accum, block, i) => {
       let [blocks, maxX, maxY] = accum;
@@ -45,7 +52,7 @@ const parseRaw = (raw: string[]): [BlockT[], number, number] => {
       if (x1 > maxX) maxX = x1;
       if (y1 > maxY) maxY = y0;
 
-      blocks.push({
+      insertSorted(blocks, {
         id: i,
         x0,
         y0,
@@ -61,8 +68,13 @@ const parseRaw = (raw: string[]): [BlockT[], number, number] => {
   );
 };
 
-const sortBlocks = (a: BlockT, b: BlockT) => {
-  return a.z0 - b.z0;
+const keyBlocks = new Map();
+let grid: NodeT[][];
+
+export const prepGrid = (x: number, y: number) => {
+  const createNode = (): NodeT => ({ height: 0, id: null });
+  const createRow = () => Array(x).fill(null).map(createNode);
+  grid = Array(y).fill(null).map(createRow);
 };
 
 const dropTall = (block: BlockT) => {
@@ -136,7 +148,7 @@ export default function main() {
 
   prepGrid(maxX + 1, maxY + 1);
 
-  blocks.sort(sortBlocks).forEach(dropBlock);
+  blocks.forEach(dropBlock);
 
   return blockCt - keyBlocks.size;
 }
