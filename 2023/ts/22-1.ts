@@ -21,13 +21,11 @@ type NodeT = {
 };
 
 const input = await readInput("22");
-const raw = input.trim().split("\n");
+export const raw = input.trim().split("\n");
 const blockCt = raw.length;
 
 const keyBlocks = new Map();
 let grid: NodeT[][];
-let maxX = 0;
-let maxY = 0;
 
 const prepGrid = (x: number, y: number) => {
   const createNode = (): NodeT => ({ height: 0, id: null });
@@ -35,25 +33,32 @@ const prepGrid = (x: number, y: number) => {
   grid = Array(y).fill(null).map(createRow);
 };
 
-const rawToBlock = (raw: string, i: number): BlockT => {
-  const [p0, p1] = raw.split("~");
-  const [x0, y0, z0] = p0.split(",").map((s) => parseInt(s));
-  const [x1, y1, z1] = p1.split(",").map((s) => parseInt(s));
+const parseRaw = (raw: string[]): [BlockT[], number, number] => {
+  return raw.reduce(
+    (accum, block, i) => {
+      let [blocks, maxX, maxY] = accum;
 
-  if (x0 > maxX) maxX = x0;
-  if (x1 > maxX) maxX = x1;
-  if (y0 > maxY) maxY = y0;
-  if (y1 > maxY) maxY = y0;
+      const [p0, p1] = block.split("~");
+      const [x0, y0, z0] = p0.split(",").map((s) => parseInt(s));
+      const [x1, y1, z1] = p1.split(",").map((s) => parseInt(s));
 
-  return {
-    id: i,
-    x0,
-    y0,
-    z0,
-    x1,
-    y1,
-    z1,
-  };
+      if (x1 > maxX) maxX = x1;
+      if (y1 > maxY) maxY = y0;
+
+      blocks.push({
+        id: i,
+        x0,
+        y0,
+        z0,
+        x1,
+        y1,
+        z1,
+      });
+
+      return [blocks, maxX, maxY];
+    },
+    [[], 0, 0],
+  );
 };
 
 const sortBlocks = (a: BlockT, b: BlockT) => {
@@ -127,7 +132,8 @@ const dropBlock = (block: BlockT) => {
 };
 
 export default function main() {
-  const blocks = raw.map(rawToBlock);
+  const [blocks, maxX, maxY] = parseRaw(raw);
+
   prepGrid(maxX + 1, maxY + 1);
 
   blocks.sort(sortBlocks).forEach(dropBlock);
